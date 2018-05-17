@@ -1,0 +1,1 @@
+<img src="{{url('images/app/squares.gif')}}" style="display:block;margin:auto"/>
