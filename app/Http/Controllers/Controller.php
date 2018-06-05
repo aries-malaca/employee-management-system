@@ -127,7 +127,7 @@ class Controller extends BaseController{
                 $new[] = $value['id'];
         }
 
-        Cache::put('my_employees' .$user->id, $new, 20);
+        Cache::put('my_employees' .$user->id, $new, 5);
 
         return $new;
     }
@@ -589,7 +589,7 @@ class Controller extends BaseController{
     }
 
     //add attendance to the database
-    function addAttendance($data){
+    function addAttendance($data, $strict = true){
         $user = User::find($data['employee_id']);
         if(strtotime($user->hired_date) > strtotime($data['date_credited']))
             return false;
@@ -672,7 +672,7 @@ class Controller extends BaseController{
         }
 
         //check if the time is graveyard then it will be determined as OUT
-        if(date('G', strtotime($data['attendance_stamp'])) < 4 AND $data['in_out'] == 'IN'){
+        if(date('G', strtotime($data['attendance_stamp'])) < 4 AND $data['in_out'] == 'IN' AND $strict){
             $graveyard = new Attendance_Class($data['employee_id'], date('Y-m-d', strtotime($data['date_credited']. " -1 day")) );
             if($graveyard->getLogs('OUT') === false AND $graveyard->hasSchedule()){
                 $data['date_credited'] = $graveyard->date;

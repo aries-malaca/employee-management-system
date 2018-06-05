@@ -476,7 +476,7 @@ class PayrollController extends Controller{
                         $this->findTransaction($payslip->deductions->transactions, 'Penalty Charges'),   // m
                         $this->findTransaction($payslip->deductions->transactions, 'Deposit Shortage/ Overage'),   // m
                         '=AV'.$row.'-SUM(AW'.$row.':BJ'.$row.')',                         // n
-                        '',
+                        $payslip->net_pay,
                         $value['tin_no'],
                         '',
                         '',

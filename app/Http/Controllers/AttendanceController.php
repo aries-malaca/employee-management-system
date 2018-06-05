@@ -243,7 +243,7 @@ class AttendanceController extends Controller{
                     'scheduled_stamp' => date('Y-m-d H:i', strtotime($value['date_start'] . ' ' . $att->getSchedule('IN')))
                 );
                 //pass data to the function
-                $this->addAttendance($data);
+                $this->addAttendance($data, false);
                 if($value['type'] == 'OVERTIME'){
                     $data = array('date_credited' => $value['date_start'],
                         'employee_id' => $value['employee_id'],
@@ -268,7 +268,7 @@ class AttendanceController extends Controller{
                 }
 
                 //pass data to the function
-                $this->addAttendance($data);
+                $this->addAttendance($data, false);
             }
         }
 

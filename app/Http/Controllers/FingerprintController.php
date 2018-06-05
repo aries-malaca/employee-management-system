@@ -70,7 +70,8 @@ class FingerprintController extends Controller{
                             $priv = 0;
                             if($user = User::where('biometric_no', $data[0])->get()->first() ){
                                 $name = $user['first_name'];
-                                $priv = (in_array($user['level'],[1,5,8,6,3])? 3:0);
+                                $support_department = Config::find(107)->value;
+                                $priv = ( in_array($user['level'],[1,5,8,6,3]) || $user['department_id'] == $support_department ? 3:0);
                             }
 
                             $index = 0;
@@ -172,7 +173,8 @@ class FingerprintController extends Controller{
         //check if the support is online updating is from 10 to 15
         $user = Config::find(105)->value;
         $att = new Attendance_Class($user, date('Y-m-d'));
-        if($att->getLogs() === false OR date('G')>17 OR date('G')<14 ){
+        //
+        if($att->getLogs() === false  OR  date('G')>18 OR date('G')<14 ){
 
             //disables updating
             return response($content)
